@@ -199,4 +199,34 @@ body {
   font-weight: bold;
   cursor: pointer;
   text-transform: uppercase;
+
+  .category-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: var(--usasoc-card-bg);
+  border: 1px solid var(--usasoc-border);
+  color: var(--usasoc-text-muted);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  border-color: var(--usasoc-gold);
+  color: #FFF;
+}
+
+.tab-btn.active {
+  background: var(--usasoc-gold);
+  color: #000;
+  font-weight: bold;
+  border-color: var(--usasoc-gold);
 }
