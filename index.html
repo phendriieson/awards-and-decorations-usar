@@ -12,7 +12,7 @@
     <div class="brand-container">
       <div class="brand-text">
         <h1>U.S. Army Special Operations Command</h1>
-        <p>OFFICIAL PERSONNEL TERMINAL</p>
+        <p>PERSONNEL DECORATIONS & SERVICE RECORD TERMINAL</p>
       </div>
     </div>
     <div class="header-status">
@@ -22,6 +22,7 @@
   </header>
 
   <div class="main-container">
+    <!-- Left Sidebar: Service Profile -->
     <aside class="panel-box">
       <div class="panel-header">Service Profile</div>
       <table class="profile-table">
@@ -37,32 +38,56 @@
       </table>
     </aside>
 
+    <!-- Main Content: Categorized Sections -->
     <main class="panel-box">
-      <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
-        <span>Decorations & Badges Index</span>
-        <span id="award-counter" style="font-size:0.8rem; color:var(--usasoc-text-muted);">0 Items</span>
+      
+      <!-- Section 1: Ribbons & Medals -->
+      <div class="section-container">
+        <div class="section-title">
+          <span>Ribbons & Decorations</span>
+          <span class="section-count" id="count-ribbons">0 Items</span>
+        </div>
+        <div class="awards-grid" id="grid-ribbons"></div>
       </div>
 
-      <!-- Category Filter Tabs -->
-      <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterCategory('All')">All</button>
-        <button class="tab-btn" onclick="filterCategory('Ribbons')">Ribbons & Medals</button>
-        <button class="tab-btn" onclick="filterCategory('Badges')">Badges & Tabs</button>
-        <button class="tab-btn" onclick="filterCategory('Foreign')">Foreign Awards</button>
-        <button class="tab-btn" onclick="filterCategory('Operations')">Operations</button>
+      <!-- Section 2: Badges & Qualifications -->
+      <div class="section-container">
+        <div class="section-title">
+          <span>Badges, Devices & Tabs</span>
+          <span class="section-count" id="count-badges">0 Items</span>
+        </div>
+        <div class="awards-grid" id="grid-badges"></div>
       </div>
 
-      <div class="awards-grid" id="awards-grid"></div>
+      <!-- Section 3: Foreign Awards -->
+      <div class="section-container">
+        <div class="section-title">
+          <span>Foreign Awards & Decorations</span>
+          <span class="section-count" id="count-foreign">0 Items</span>
+        </div>
+        <div class="awards-grid" id="grid-foreign"></div>
+      </div>
+
+      <!-- Section 4: Operations & AAR Logs -->
+      <div class="section-container">
+        <div class="section-title">
+          <span>Operations & After Action Reports</span>
+          <span class="section-count" id="count-operations">0 Items</span>
+        </div>
+        <div class="awards-grid" id="grid-operations"></div>
+      </div>
+
     </main>
   </div>
 
+  <!-- Evidence Modal -->
   <div class="modal-overlay" id="evidence-modal">
     <div class="modal-content">
       <div class="panel-header" id="modal-title">Decoration Title</div>
       <p><strong>Status:</strong> <span id="modal-status"></span></p>
       <p><strong>Date Awarded:</strong> <span id="modal-date"></span></p>
       <p><strong>Official Record / Evidence:</strong></p>
-      <div style="background:var(--usasoc-black); padding:10px; border:1px solid var(--usasoc-border); font-family:var(--font-mono); font-size:0.85rem;" id="modal-evidence"></div>
+      <div class="evidence-box" id="modal-evidence"></div>
       <br>
       <button class="btn-usasoc" style="float:right;" onclick="closeModal()">Close</button>
     </div>
