@@ -5,14 +5,18 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let globalAwards = [];
 
 async function handleLogin() {
-  const email = document.getElementById("admin-email").value;
-  const password = document.getElementById("admin-password").value;
+  const email = document.getElementById("admin-email").value.trim();
+  const password = document.getElementById("admin-password").value.trim();
+
+  console.log("Attempting login for:", email);
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
+    console.error("Auth Error:", error);
     alert("Authentication Failed: " + error.message);
   } else {
+    console.log("Auth Success:", data);
     alert("Terminal Access Granted.");
     document.getElementById("login-container").style.display = "none";
     document.getElementById("editor-container").style.display = "grid";
@@ -22,7 +26,10 @@ async function handleLogin() {
 
 async function loadCloudData() {
   const { data, error } = await supabase.from('awards').select('*').order('id', { ascending: true });
-  if (error) return console.error(error);
+  if (error) {
+    console.error("Fetch Error:", error);
+    return alert("Failed to fetch awards: " + error.message);
+  }
   
   globalAwards = data;
   populateSelect();
@@ -31,6 +38,7 @@ async function loadCloudData() {
 
 function populateSelect() {
   const select = document.getElementById("edit-award-select");
+  if (!select) return;
   select.innerHTML = "";
   globalAwards.forEach((item, index) => {
     const opt = document.createElement("option");
@@ -44,6 +52,7 @@ function populateSelect() {
 function loadSelectedAward() {
   const idx = document.getElementById("edit-award-select").value;
   const item = globalAwards[idx];
+  if (!item) return;
   document.getElementById("edit-status").value = item.status;
   document.getElementById("edit-date").value = item.date || "";
   document.getElementById("edit-evidence").value = item.evidence || "";
@@ -67,6 +76,7 @@ async function saveToDatabase() {
     .eq('id', selectedAward.id);
 
   if (error) {
+    console.error("Update Error:", error);
     alert("Error updating record: " + error.message);
   } else {
     alert("Record updated successfully!");
@@ -76,6 +86,7 @@ async function saveToDatabase() {
 
 function renderPreview() {
   const container = document.getElementById("preview-grid");
+  if (!container) return;
   container.innerHTML = "";
   globalAwards.forEach(item => {
     const card = document.createElement("div");
