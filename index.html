@@ -10,11 +10,9 @@
 
   <header class="command-header">
     <div class="brand-container">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Distinctive_unit_insignia_of_the_75th_Ranger_Regiment.svg/1000px-Distinctive_unit_insignia_of_the_75th_Ranger_Regiment.svg.png" alt="75th Ranger Regiment">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/United_States_Army_Special_Operations_Command_SSI.svg/500px-United_States_Army_Special_Operations_Command_SSI.svg.png" alt="USASOC">
       <div class="brand-text">
         <h1>U.S. Army Special Operations Command</h1>
-        <p>75TH RANGER REGIMENT — OFFICIAL PERSONNEL TERMINAL</p>
+        <p>OFFICIAL PERSONNEL TERMINAL</p>
       </div>
     </div>
     <div class="header-status">
@@ -34,16 +32,26 @@
         <tr><th>Battalion</th><td>1st Ranger Battalion</td></tr>
         <tr><th>Company</th><td>Ares Company</td></tr>
         <tr><th>Position</th><td>Squad Leader</td></tr>
-        <tr><th>USAR Service</th><td>337 Days</td></tr>
-        <tr><th>75th Service</th><td>18 Days</td></tr>
+        <tr><th>USAR Service</th><td id="usar-service">Calculating...</td></tr>
+        <tr><th>75th Service</th><td id="regiment-service">Calculating...</td></tr>
       </table>
     </aside>
 
     <main class="panel-box">
       <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
         <span>Decorations & Badges Index</span>
-        <span id="award-counter" style="font-size:0.8rem; color:var(--usasoc-text-muted);">103 Items</span>
+        <span id="award-counter" style="font-size:0.8rem; color:var(--usasoc-text-muted);">0 Items</span>
       </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="category-tabs">
+        <button class="tab-btn active" onclick="filterCategory('All')">All</button>
+        <button class="tab-btn" onclick="filterCategory('Ribbons')">Ribbons & Medals</button>
+        <button class="tab-btn" onclick="filterCategory('Badges')">Badges & Tabs</button>
+        <button class="tab-btn" onclick="filterCategory('Foreign')">Foreign Awards</button>
+        <button class="tab-btn" onclick="filterCategory('Operations')">Operations</button>
+      </div>
+
       <div class="awards-grid" id="awards-grid"></div>
     </main>
   </div>
@@ -60,9 +68,7 @@
     </div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/app.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
