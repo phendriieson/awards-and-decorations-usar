@@ -1,16 +1,36 @@
+const SUPABASE_URL = 'https://kjejbhcndyczajsnoddr.supabase.co/rest/v1/';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtqZWpiaGNuZHljemFqc25vZGRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0OTgxMjIsImV4cCI6MjEwMzA3NDEyMn0.fL-rmBwnvrBSe_sMT8zKRR8ZeCgaQmdGvLFKv9mHTNQ';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 let globalAwards = [];
 
-document.addEventListener("DOMContentLoaded", async () => {
-  let data = localStorage.getItem("usasoc_awards_db");
-  globalAwards = data ? JSON.parse(data) : await (await fetch("data/awards.json")).json();
+async function handleLogin() {
+  const email = document.getElementById("admin-email").value;
+  const password = document.getElementById("admin-password").value;
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    alert("Authentication Failed: " + error.message);
+  } else {
+    alert("Authentication Successful. Terminal Access Granted.");
+    document.getElementById("login-container").style.display = "none";
+    document.getElementById("editor-container").style.display = "grid";
+    loadCloudData();
+  }
+}
+
+async function loadCloudData() {
+  const { data, error } = await supabase.from('awards').select('*').order('id', { ascending: true });
+  if (error) return console.error(error);
   
+  globalAwards = data;
   populateSelect();
   renderPreview();
-});
+}
 
 function populateSelect() {
   const select = document.getElementById("edit-award-select");
-  if (!select) return;
   select.innerHTML = "";
   globalAwards.forEach((item, index) => {
     const opt = document.createElement("option");
@@ -29,22 +49,33 @@ function loadSelectedAward() {
   document.getElementById("edit-evidence").value = item.evidence || "";
 }
 
-function applyChanges() {
+async function saveToDatabase() {
   const idx = document.getElementById("edit-award-select").value;
-  globalAwards[idx].status = document.getElementById("edit-status").value;
-  globalAwards[idx].date = document.getElementById("edit-date").value;
-  globalAwards[idx].evidence = document.getElementById("edit-evidence").value;
+  const selectedAward = globalAwards[idx];
 
-  localStorage.setItem("usasoc_awards_db", JSON.stringify(globalAwards));
-  
-  populateSelect();
-  renderPreview();
-  alert("Changes saved to live preview!");
+  const updatedStatus = document.getElementById("edit-status").value;
+  const updatedDate = document.getElementById("edit-date").value;
+  const updatedEvidence = document.getElementById("edit-evidence").value;
+
+  const { error } = await supabase
+    .from('awards')
+    .update({ 
+      status: updatedStatus, 
+      date: updatedDate, 
+      evidence: updatedEvidence 
+    })
+    .eq('id', selectedAward.id);
+
+  if (error) {
+    alert("Error updating record: " + error.message);
+  } else {
+    alert("Record updated permanently in Cloud Database!");
+    loadCloudData();
+  }
 }
 
 function renderPreview() {
   const container = document.getElementById("preview-grid");
-  if (!container) return;
   container.innerHTML = "";
   globalAwards.forEach(item => {
     const card = document.createElement("div");
