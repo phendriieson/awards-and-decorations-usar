@@ -2,12 +2,14 @@ const SUPABASE_URL = 'https://kjejbhcndyczajsnoddr.supabase.co/rest/v1/';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtqZWpiaGNuZHljemFqc25vZGRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0OTgxMjIsImV4cCI6MjEwMzA3NDEyMn0.fL-rmBwnvrBSe_sMT8zKRR8ZeCgaQmdGvLFKv9mHTNQ';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+let allAwards = [];
+
 document.addEventListener("DOMContentLoaded", () => {
   calculateServiceTime();
   loadAwardsData();
 });
 
-// Calculate active service days automatically
+// Calculate active service durations
 function calculateServiceTime() {
   const usarStartDate = new Date("2024-09-20");
   const regimentStartDate = new Date("2025-08-05"); 
@@ -20,7 +22,7 @@ function calculateServiceTime() {
   document.getElementById("regiment-service").innerText = `${diffRegimentDays} Days`;
 }
 
-// Fetch and organize records into category sections
+// Fetch database rows from Supabase
 async function loadAwardsData() {
   try {
     const { data: awards, error } = await supabase
@@ -29,61 +31,65 @@ async function loadAwardsData() {
       .order('id', { ascending: true });
 
     if (error) throw error;
-
-    const categories = {
-      ribbons: [],
-      badges: [],
-      foreign: [],
-      operations: []
-    };
-
-    awards.forEach(item => {
-      const cat = getCategory(item);
-      categories[cat].push(item);
-    });
-
-    renderGrid("grid-ribbons", "count-ribbons", categories.ribbons);
-    renderGrid("grid-badges", "count-badges", categories.badges);
-    renderGrid("grid-foreign", "count-foreign", categories.foreign);
-    renderGrid("grid-operations", "count-operations", categories.operations);
-
+    allAwards = awards;
+    renderAwards(allAwards);
   } catch (err) {
     console.error("Error loading awards database:", err);
   }
 }
 
+// Category Sorter
 function getCategory(item) {
   const name = item.name.toLowerCase();
-  
   if (name.includes('operation') || name.includes('after action report') || name.includes('gamenight') || name.includes('codwii') || name.includes('rice krispie')) {
-    return 'operations';
+    return 'Operations';
   }
   if (name.includes('queens') || name.includes('turkish') || name.includes('korea') || name.includes('royal air force') || name.includes('philippines') || name.includes('british army')) {
-    return 'foreign';
+    return 'Foreign';
   }
   if (name.includes('badge') || name.includes('tab') || name.includes('device') || name.includes('wings') || name.includes('bar') || name.includes('stripe')) {
-    return 'badges';
+    return 'Badges';
   }
-  return 'ribbons';
+  return 'Ribbons';
 }
 
-function renderGrid(gridId, countId, items) {
-  const container = document.getElementById(gridId);
-  const countElem = document.getElementById(countId);
+function filterCategory(category, targetBtn) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  targetBtn.classList.add('active');
+
+  if (category === 'All') {
+    renderAwards(allAwards);
+  } else {
+    const filtered = allAwards.filter(item => getCategory(item) === category);
+    renderAwards(filtered);
+  }
+}
+
+function renderAwards(awards) {
+  const container = document.getElementById("awards-grid");
   if (!container) return;
-
+  
   container.innerHTML = "";
-  if (countElem) countElem.innerText = `${items.length} Items`;
+  
+  if (awards.length === 0) {
+    container.innerHTML = `<div class="text-gray-500 font-mono text-sm py-4">No records found in this category.</div>`;
+    return;
+  }
 
-  items.forEach(item => {
+  awards.forEach(item => {
     const card = document.createElement("div");
     card.className = `award-card ${item.status ? item.status.toLowerCase() : 'unobtained'}`;
     card.onclick = () => showEvidence(item);
 
     const numTag = item.num ? `#${item.num}` : '';
+    const statusColor = item.status === 'Obtained' ? 'text-green-500' : 'text-gray-500';
+
     card.innerHTML = `
-      <div class="award-title">${numTag} ${item.name}</div>
-      <div class="award-tag" style="color: ${item.status === 'Obtained' ? 'var(--usasoc-status-obtained)' : '#888'}">${item.status}</div>
+      <div>
+        <div class="font-display font-semibold text-sm text-white">${numTag} ${item.name}</div>
+        <div class="font-mono text-[10px] text-gray-400 mt-1">${item.date || 'No Date Filed'}</div>
+      </div>
+      <div class="font-mono text-xs uppercase font-bold ${statusColor}">${item.status}</div>
     `;
     container.appendChild(card);
   });
@@ -92,12 +98,11 @@ function renderGrid(gridId, countId, items) {
 function showEvidence(item) {
   document.getElementById("modal-title").innerText = item.name;
   document.getElementById("modal-status").innerText = item.status;
-  document.getElementById("modal-status").style.color = item.status === "Obtained" ? "var(--usasoc-status-obtained)" : "#888";
   document.getElementById("modal-date").innerText = item.date || "N/A";
-  document.getElementById("modal-evidence").innerText = item.evidence || "No formal record filed.";
-  document.getElementById("evidence-modal").style.display = "flex";
+  document.getElementById("modal-evidence").innerText = item.evidence || "No formal record or evidence log filed.";
+  document.getElementById("evidence-modal").classList.remove("hidden");
 }
 
 function closeModal() {
-  document.getElementById("evidence-modal").style.display = "none";
+  document.getElementById("evidence-modal").classList.add("hidden");
 }
