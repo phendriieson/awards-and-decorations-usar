@@ -1,145 +1,42 @@
-:root {
-  --usasoc-gold: #D4AF37;
-  --usasoc-black: #0B0E0C;
-  --usasoc-dark-panel: #121814;
-  --usasoc-card-bg: #1A221C;
-  --usasoc-border: #2D3A30;
-  --usasoc-border-highlight: #485E4E;
-  --usasoc-text-main: #E2E8E3;
-  --usasoc-text-muted: #8E9E91;
-  --usasoc-status-obtained: #4CAF50;
-  --usasoc-status-unobtained: #555555;
-  --font-mono: 'Consolas', 'Courier New', monospace;
-  --font-sans: 'Rajdhani', 'Roboto', sans-serif;
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
-body {
-  background-color: var(--usasoc-black);
-  color: var(--usasoc-text-main);
-  font-family: var(--font-sans);
-  margin: 0;
-  padding: 0;
-  line-height: 1.5;
-}
-
-.command-header {
-  background: linear-gradient(180deg, #151D17 0%, var(--usasoc-black) 100%);
-  border-bottom: 3px solid var(--usasoc-gold);
-  padding: 20px 40px;
+.animate-marquee {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 200%;
+  animation: marquee 25s linear infinite;
 }
 
-.brand-text h1 {
-  font-size: 1.8rem;
-  color: var(--usasoc-gold);
-  margin: 0;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-.brand-text p {
-  margin: 2px 0 0 0;
-  font-family: var(--font-mono);
-  color: var(--usasoc-text-muted);
+.tab-btn {
+  background: #111827;
+  border: 1px solid #1f2937;
+  color: #9ca3af;
+  padding: 8px 16px;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 0.85rem;
-}
-
-.header-status {
-  font-family: var(--font-mono);
-  text-align: right;
-  font-size: 0.8rem;
-  color: var(--usasoc-gold);
-  border: 1px solid var(--usasoc-border);
-  padding: 8px 12px;
-  background: var(--usasoc-dark-panel);
-}
-
-.main-container {
-  max-width: 1400px;
-  margin: 30px auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 30px;
-}
-
-.panel-box {
-  background: var(--usasoc-dark-panel);
-  border: 1px solid var(--usasoc-border);
-  border-radius: 4px;
-  padding: 20px;
-}
-
-.panel-header {
-  font-size: 1.1rem;
-  color: var(--usasoc-gold);
-  border-bottom: 2px solid var(--usasoc-border-highlight);
-  padding-bottom: 8px;
-  margin-bottom: 15px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
+  transition: all 0.2s ease;
 }
 
-.section-container {
-  margin-bottom: 30px;
+.tab-btn:hover {
+  border-color: #D4AF37;
+  color: #ffffff;
 }
 
-.section-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(212, 175, 55, 0.05);
-  border-left: 4px solid var(--usasoc-gold);
-  padding: 8px 12px;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #FFF;
-  letter-spacing: 1px;
-}
-
-.section-count {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--usasoc-text-muted);
-}
-
-.profile-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
-}
-
-.profile-table th {
-  text-align: left;
-  color: var(--usasoc-text-muted);
-  padding: 8px 0;
-  border-bottom: 1px solid var(--usasoc-border);
-  font-weight: normal;
-}
-
-.profile-table td {
-  text-align: right;
-  color: #FFF;
-  font-weight: bold;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--usasoc-border);
-}
-
-.awards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
+.tab-btn.active {
+  background: #D4AF37;
+  color: #000000;
+  border-color: #D4AF37;
 }
 
 .award-card {
-  background: var(--usasoc-card-bg);
-  border: 1px solid var(--usasoc-border);
-  padding: 12px 15px;
-  border-radius: 3px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  padding: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -148,90 +45,15 @@ body {
 }
 
 .award-card:hover {
-  border-color: var(--usasoc-gold);
+  border-color: #D4AF37;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
 }
 
-.award-card.obtained { border-left: 4px solid var(--usasoc-status-obtained); }
-.award-card.unobtained { border-left: 4px solid var(--usasoc-status-unobtained); opacity: 0.65; }
-
-.award-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #FFF;
+.award-card.obtained {
+  border-left: 4px solid #22c55e;
 }
 
-.award-tag {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-}
-
-.evidence-box {
-  background: var(--usasoc-black);
-  padding: 12px;
-  border: 1px solid var(--usasoc-border);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--usasoc-text-main);
-  white-space: pre-wrap;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(4px);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.modal-content {
-  background: var(--usasoc-dark-panel);
-  border: 2px solid var(--usasoc-gold);
-  width: 500px;
-  padding: 25px;
-  border-radius: 4px;
-}
-
-.btn-usasoc {
-  background: var(--usasoc-gold);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  font-weight: bold;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-family: var(--font-mono);
-}
-
-.admin-split-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  padding: 30px;
-}
-
-.editor-form label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--usasoc-gold);
-  margin-bottom: 5px;
-}
-
-.editor-form input, .editor-form select, .editor-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  background: var(--usasoc-black);
-  border: 1px solid var(--usasoc-border);
-  color: #FFF;
-  font-family: var(--font-mono);
-  box-sizing: border-box;
+.award-card.unobtained {
+  border-left: 4px solid #4b5563;
+  opacity: 0.6;
 }
