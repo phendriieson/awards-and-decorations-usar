@@ -31,17 +31,6 @@ body {
   justify-content: space-between;
 }
 
-.brand-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.brand-container img {
-  height: 80px;
-  filter: drop-shadow(0 0 8px rgba(0,0,0,0.8));
-}
-
 .brand-text h1 {
   font-size: 1.8rem;
   color: var(--usasoc-gold);
@@ -84,13 +73,38 @@ body {
 }
 
 .panel-header {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--usasoc-gold);
   border-bottom: 2px solid var(--usasoc-border-highlight);
   padding-bottom: 8px;
   margin-bottom: 15px;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.section-container {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(212, 175, 55, 0.05);
+  border-left: 4px solid var(--usasoc-gold);
+  padding: 8px 12px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #FFF;
+  letter-spacing: 1px;
+}
+
+.section-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--usasoc-text-muted);
 }
 
 .profile-table {
@@ -105,7 +119,6 @@ body {
   padding: 8px 0;
   border-bottom: 1px solid var(--usasoc-border);
   font-weight: normal;
-  width: 40%;
 }
 
 .profile-table td {
@@ -118,7 +131,7 @@ body {
 
 .awards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 12px;
 }
 
@@ -141,7 +154,7 @@ body {
 }
 
 .award-card.obtained { border-left: 4px solid var(--usasoc-status-obtained); }
-.award-card.unobtained { border-left: 4px solid var(--usasoc-status-unobtained); opacity: 0.6; }
+.award-card.unobtained { border-left: 4px solid var(--usasoc-status-unobtained); opacity: 0.65; }
 
 .award-title {
   font-size: 0.85rem;
@@ -153,6 +166,18 @@ body {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   text-transform: uppercase;
+}
+
+.evidence-box {
+  background: var(--usasoc-black);
+  padding: 12px;
+  border: 1px solid var(--usasoc-border);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--usasoc-text-main);
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .modal-overlay {
@@ -174,11 +199,30 @@ body {
   border-radius: 4px;
 }
 
+.btn-usasoc {
+  background: var(--usasoc-gold);
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
 .admin-split-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   padding: 30px;
+}
+
+.editor-form label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--usasoc-gold);
+  margin-bottom: 5px;
 }
 
 .editor-form input, .editor-form select, .editor-form textarea {
@@ -189,44 +233,5 @@ body {
   border: 1px solid var(--usasoc-border);
   color: #FFF;
   font-family: var(--font-mono);
-}
-
-.btn-usasoc {
-  background: var(--usasoc-gold);
-  color: #000;
-  border: none;
-  padding: 12px 24px;
-  font-weight: bold;
-  cursor: pointer;
-  text-transform: uppercase;
-
-  .category-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.tab-btn {
-  background: var(--usasoc-card-bg);
-  border: 1px solid var(--usasoc-border);
-  color: var(--usasoc-text-muted);
-  padding: 8px 16px;
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  transition: all 0.2s ease;
-}
-
-.tab-btn:hover {
-  border-color: var(--usasoc-gold);
-  color: #FFF;
-}
-
-.tab-btn.active {
-  background: var(--usasoc-gold);
-  color: #000;
-  font-weight: bold;
-  border-color: var(--usasoc-gold);
+  box-sizing: border-box;
 }
