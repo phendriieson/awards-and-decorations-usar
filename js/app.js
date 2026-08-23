@@ -1,11 +1,19 @@
+const SUPABASE_URL = 'https://kjejbhcndyczajsnoddr.supabase.co/rest/v1/';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtqZWpiaGNuZHljemFqc25vZGRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0OTgxMjIsImV4cCI6MjEwMzA3NDEyMn0.fL-rmBwnvrBSe_sMT8zKRR8ZeCgaQmdGvLFKv9mHTNQ';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 document.addEventListener("DOMContentLoaded", () => {
   loadAwardsData();
 });
 
 async function loadAwardsData() {
   try {
-    let data = localStorage.getItem("usasoc_awards_db");
-    let awards = data ? JSON.parse(data) : await (await fetch("data/awards.json")).json();
+    const { data: awards, error } = await supabase
+      .from('awards')
+      .select('*')
+      .order('id', { ascending: true });
+
+    if (error) throw error;
     renderAwards(awards);
   } catch (err) {
     console.error("Error loading awards database:", err);
