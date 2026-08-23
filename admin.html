@@ -9,29 +9,31 @@
 
   <header class="command-header">
     <div class="brand-text">
-      <h1>USASOC Personnel Command Editor</h1>
-      <p>SECURE EDITOR // DATABASE SYNC ENGINE</p>
+      <h1>USASOC Command Administration Terminal</h1>
+      <p>DATABASE EDIT & LOG UPDATE PORTAL</p>
     </div>
   </header>
 
-  <!-- LOGIN BOX -->
+  <!-- Login Form -->
   <div id="login-container" style="max-width: 400px; margin: 50px auto;" class="panel-box">
     <div class="panel-header">Admin Authentication</div>
     <form onsubmit="event.preventDefault(); handleLogin();">
-      <label>Admin Email</label>
-      <input type="email" id="admin-email" required style="width:100%; padding:10px; margin-bottom:15px; background:#000; color:#fff; border:1px solid #2D3A30;">
-      <label>Password</label>
-      <input type="password" id="admin-password" required style="width:100%; padding:10px; margin-bottom:15px; background:#000; color:#fff; border:1px solid #2D3A30;">
-      <button type="submit" class="btn-usasoc" style="width:100%;">Authenticate</button>
+      <div class="editor-form">
+        <label>Admin Email</label>
+        <input type="email" id="admin-email" required>
+        <label>Password</label>
+        <input type="password" id="admin-password" required>
+        <button type="submit" class="btn-usasoc" style="width:100%;">Authenticate</button>
+      </div>
     </form>
   </div>
 
-  <!-- EDITOR INTERFACE (Hidden until logged in) -->
+  <!-- Admin Control Panel -->
   <div id="editor-container" class="admin-split-container" style="display:none;">
     <div class="panel-box">
-      <div class="panel-header">Update Cloud Record</div>
+      <div class="panel-header">Update Record & Add Logs</div>
       <form class="editor-form" onsubmit="event.preventDefault(); saveToDatabase();">
-        <label>Select Decoration/Award</label>
+        <label>Select Record</label>
         <select id="edit-award-select" onchange="loadSelectedAward()"></select>
 
         <label>Status</label>
@@ -43,15 +45,15 @@
         <label>Date Awarded</label>
         <input type="text" id="edit-date" placeholder="YYYY-MM-DD">
 
-        <label>Evidence Log / Notes</label>
-        <textarea id="edit-evidence" rows="4"></textarea>
+        <label>Evidence Log / Mission Notes</label>
+        <textarea id="edit-evidence" rows="6" placeholder="Enter official log details or proof..."></textarea>
 
-        <button type="submit" class="btn-usasoc">Save Permanently to Cloud</button>
+        <button type="submit" class="btn-usasoc" style="width:100%;">Save to Cloud Database</button>
       </form>
     </div>
 
     <div class="panel-box">
-      <div class="panel-header">Live Terminal Preview</div>
+      <div class="panel-header">Live Database Overview</div>
       <div class="awards-grid" id="preview-grid" style="max-height: 500px; overflow-y: auto;"></div>
     </div>
   </div>
