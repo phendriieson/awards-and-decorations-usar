@@ -53,27 +53,27 @@
     <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto px-6 py-12 w-full flex-grow flex items-center justify-center">
 
-      <!-- Login Container -->
-      <div id="login-container" class="w-full max-w-md bg-card border border-border p-8 shadow-2xl">
-        <div class="mb-6">
-          <span class="font-display text-xs text-primary uppercase font-bold tracking-widest">Restricted Access</span>
-          <h2 class="text-2xl font-display font-bold text-white uppercase mt-1">Admin Authentication</h2>
-        </div>
-        
-        <form onsubmit="handleLogin(event)" class="space-y-4">
-          <div>
-            <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Email Identifier</label>
-            <input type="email" id="admin-email" required class="w-full bg-black border border-border px-4 py-3 text-sm text-white focus:border-primary focus:outline-none font-mono">
-          </div>
-          <div>
-            <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Security Passcode</label>
-            <input type="password" id="admin-password" required class="w-full bg-black border border-border px-4 py-3 text-sm text-white focus:border-primary focus:outline-none font-mono">
-          </div>
-          <button type="submit" class="w-full bg-primary text-black font-display font-bold uppercase py-3 text-sm tracking-widest hover:bg-primary/90 transition-colors">
-            Authenticate Session
-          </button>
-        </form>
-      </div>
+<!-- Login Container -->
+<div id="login-container" class="w-full max-w-md bg-card border border-border p-8 shadow-2xl">
+  <div class="mb-6">
+    <span class="font-display text-xs text-primary uppercase font-bold tracking-widest">Restricted Access</span>
+    <h2 class="text-2xl font-display font-bold text-white uppercase mt-1">Admin Authentication</h2>
+  </div>
+  
+  <div class="space-y-4">
+    <div>
+      <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Email Identifier</label>
+      <input type="email" id="admin-email" required class="w-full bg-black border border-border px-4 py-3 text-sm text-white focus:border-primary focus:outline-none font-mono">
+    </div>
+    <div>
+      <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Security Passcode</label>
+      <input type="password" id="admin-password" required class="w-full bg-black border border-border px-4 py-3 text-sm text-white focus:border-primary focus:outline-none font-mono">
+    </div>
+    <button type="button" onclick="handleLogin()" class="w-full bg-primary text-black font-display font-bold uppercase py-3 text-sm tracking-widest hover:bg-primary/90 transition-colors">
+      Authenticate Session
+    </button>
+  </div>
+</div>
 
       <!-- Editor Container (Hidden by default until login) -->
       <div id="editor-container" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 hidden">
