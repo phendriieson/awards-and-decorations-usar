@@ -1,64 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <title>USASOC Admin Terminal</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USASOC Admin Portal</title>
+    <link rel="icon" href="https://ik.imagekit.io/jwilg4xts/logos/usasoc.png" type="image/x-icon">
+    
+    <!-- Fonts & Tailwind CSS CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#D4AF37',
+              border: '#1f2937',
+              card: '#111827',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Rajdhani', 'sans-serif'],
+              mono: ['Fira Code', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="min-h-screen bg-[#0a0a0a] text-gray-200 font-sans flex flex-col justify-between">
 
-  <header class="command-header">
-    <div class="brand-text">
-      <h1>USASOC Command Administration Terminal</h1>
-      <p>DATABASE EDIT & LOG UPDATE PORTAL</p>
-    </div>
-  </header>
-
-  <!-- Login Form -->
-  <div id="login-container" style="max-width: 400px; margin: 50px auto;" class="panel-box">
-    <div class="panel-header">Admin Authentication</div>
-    <form onsubmit="event.preventDefault(); handleLogin();">
-      <div class="editor-form">
-        <label>Admin Email</label>
-        <input type="email" id="admin-email" required>
-        <label>Password</label>
-        <input type="password" id="admin-password" required>
-        <button type="submit" class="btn-usasoc" style="width:100%;">Authenticate</button>
+    <!-- Header Navigation -->
+    <nav class="border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <img class="w-10 h-10 object-contain" src="https://ik.imagekit.io/jwilg4xts/logos/usasoc.png" alt="USASOC Seal">
+          <div>
+            <div class="font-display font-bold text-lg tracking-widest text-white">USASOC ADMIN</div>
+            <div class="text-[10px] uppercase tracking-widest text-gray-400">Personnel Terminal Operations</div>
+          </div>
+        </div>
+        <a href="index.html" class="px-4 py-2 border border-white/20 text-white hover:border-primary hover:text-primary transition-colors font-display text-xs tracking-widest uppercase">
+          Back to Public Site
+        </a>
       </div>
-    </form>
-  </div>
+    </nav>
 
-  <!-- Admin Control Panel -->
-  <div id="editor-container" class="admin-split-container" style="display:none;">
-    <div class="panel-box">
-      <div class="panel-header">Update Record & Add Logs</div>
-      <form class="editor-form" onsubmit="event.preventDefault(); saveToDatabase();">
-        <label>Select Record</label>
-        <select id="edit-award-select" onchange="loadSelectedAward()"></select>
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-6 py-12 w-full flex-grow flex items-center justify-center">
 
-        <label>Status</label>
-        <select id="edit-status">
-          <option value="Obtained">Obtained</option>
-          <option value="Unobtained">Unobtained</option>
-        </select>
+      <!-- Login Container -->
+      <div id="login-container" class="w-full max-w-md bg-card border border-border p-8 shadow-2xl">
+        <div class="mb-6">
+          <span class="font-display text-xs text-primary uppercase font-bold tracking-widest">Restricted Access</span>
+          <h2 class="text-2xl font-display font-bold text-white uppercase mt-1">Admin Authentication</h2>
+        </div>
+        
+        <form onsubmit="handleLogin(event)" class="space-y-4">
+          <div>
+            <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Email Identifier</label>
+            <input type="email" id="admin-email" required class="w-full bg-black border border-border px-4 py-3 text-sm text-white focus:border-primary focus:outline-none font-mono">
+          </div>
+          <div>
+            <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Security Passcode</label>
+            <input type="password" id="admin-password" required class="w-full bg-black border border-border px-4 py-3 text-sm text-white focus:border-primary focus:outline-none font-mono">
+          </div>
+          <button type="submit" class="w-full bg-primary text-black font-display font-bold uppercase py-3 text-sm tracking-widest hover:bg-primary/90 transition-colors">
+            Authenticate Session
+          </button>
+        </form>
+      </div>
 
-        <label>Date Awarded</label>
-        <input type="text" id="edit-date" placeholder="YYYY-MM-DD">
+      <!-- Editor Container (Hidden by default until login) -->
+      <div id="editor-container" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 hidden">
+        
+        <!-- Controls Panel -->
+        <div class="bg-card border border-border p-6 h-fit">
+          <h3 class="font-display text-xl font-bold uppercase text-primary mb-4 border-b border-border pb-2">Record Modifier</h3>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Select Record</label>
+              <select id="edit-award-select" onchange="loadSelectedAward()" class="w-full bg-black border border-border p-3 text-xs text-white font-mono focus:border-primary focus:outline-none">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
 
-        <label>Evidence Log / Mission Notes</label>
-        <textarea id="edit-evidence" rows="6" placeholder="Enter official log details or proof..."></textarea>
+            <div>
+              <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Award Status</label>
+              <select id="edit-status" class="w-full bg-black border border-border p-3 text-xs text-white font-mono focus:border-primary focus:outline-none">
+                <option value="Obtained">Obtained</option>
+                <option value="Unobtained">Unobtained</option>
+              </select>
+            </div>
 
-        <button type="submit" class="btn-usasoc" style="width:100%;">Save to Cloud Database</button>
-      </form>
-    </div>
+            <div>
+              <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Date Issued / Filed</label>
+              <input type="text" id="edit-date" placeholder="YYYY-MM-DD or Text Date" class="w-full bg-black border border-border p-3 text-xs text-white font-mono focus:border-primary focus:outline-none">
+            </div>
 
-    <div class="panel-box">
-      <div class="panel-header">Live Database Overview</div>
-      <div class="awards-grid" id="preview-grid" style="max-height: 500px; overflow-y: auto;"></div>
-    </div>
-  </div>
+            <div>
+              <label class="block font-mono text-xs text-gray-400 uppercase mb-1">Official Evidence Log / Notes</label>
+              <textarea id="edit-evidence" rows="5" class="w-full bg-black border border-border p-3 text-xs text-white font-mono focus:border-primary focus:outline-none" placeholder="Enter log information..."></textarea>
+            </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/admin.js"></script>
+            <button onclick="saveToDatabase()" class="w-full bg-primary text-black font-display font-bold uppercase py-3 text-xs tracking-widest hover:bg-primary/90 transition-colors">
+              Commit Changes to Database
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Database Preview -->
+        <div class="bg-card border border-border p-6 max-h-[700px] overflow-y-auto">
+          <h3 class="font-display text-xl font-bold uppercase text-white mb-4 border-b border-border pb-2">Database Cache Preview</h3>
+          <div id="preview-grid" class="grid grid-cols-1 gap-3">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Supabase CDN and Admin Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/admin.js"></script>
 </body>
 </html>
