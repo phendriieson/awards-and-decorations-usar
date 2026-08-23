@@ -8,13 +8,20 @@ const supabaseAdmin = window.supabaseAdmin || window.supabase.createClient(SUPAB
 let globalAwards = [];
 
 // Authenticate Admin User
-async function handleLogin(event) {
-  if (event) {
-    event.preventDefault(); // Prevents page refresh on form submission
+async function handleLogin() {
+  const emailInput = document.getElementById("admin-email");
+  const passwordInput = document.getElementById("admin-password");
+
+  if (!emailInput || !passwordInput) {
+    return alert("Input fields not found on page.");
   }
 
-  const email = document.getElementById("admin-email").value.trim();
-  const password = document.getElementById("admin-password").value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if (!email || !password) {
+    return alert("Please enter both email and password.");
+  }
 
   console.log("Attempting authentication for:", email);
 
@@ -27,11 +34,9 @@ async function handleLogin(event) {
     console.log("Auth Success:", data);
     alert("Terminal Access Granted.");
     
-    // Switch view state
     document.getElementById("login-container").classList.add("hidden");
     document.getElementById("editor-container").classList.remove("hidden");
     
-    // Fetch and display table rows
     loadCloudData();
   }
 }
