@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>USASOC Admin Terminal & Live Preview</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="command-header">
+    <div class="brand-text">
+      <h1>USASOC Personnel Command Editor</h1>
+      <p>SECURE EDITOR // REAL-TIME PREVIEW ENGINE</p>
+    </div>
+  </header>
+
+  <div class="admin-split-container">
+    <div class="panel-box">
+      <div class="panel-header">Update Record Data</div>
+      <form class="editor-form" id="editor-form" onsubmit="event.preventDefault(); applyChanges();">
+        <label>Select Decoration/Award</label>
+        <select id="edit-award-select" onchange="loadSelectedAward()"></select>
+
+        <label>Status</label>
+        <select id="edit-status">
+          <option value="Obtained">Obtained</option>
+          <option value="Unobtained">Unobtained</option>
+        </select>
+
+        <label>Date Awarded</label>
+        <input type="text" id="edit-date" placeholder="YYYY-MM-DD">
+
+        <label>Evidence Log / Notes</label>
+        <textarea id="edit-evidence" rows="4"></textarea>
+
+        <button type="submit" class="btn-usasoc">Apply Changes (Real-Time Preview)</button>
+      </form>
+    </div>
+
+    <div class="panel-box">
+      <div class="panel-header">Live Terminal Preview</div>
+      <div class="awards-grid" id="preview-grid" style="max-height: 500px; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
