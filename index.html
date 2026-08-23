@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USASOC Personnel Record Terminal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="command-header">
+    <div class="brand-container">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Distinctive_unit_insignia_of_the_75th_Ranger_Regiment.svg/1000px-Distinctive_unit_insignia_of_the_75th_Ranger_Regiment.svg.png" alt="75th Ranger Regiment">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/United_States_Army_Special_Operations_Command_SSI.svg/500px-United_States_Army_Special_Operations_Command_SSI.svg.png" alt="USASOC">
+      <div class="brand-text">
+        <h1>U.S. Army Special Operations Command</h1>
+        <p>75TH RANGER REGIMENT — OFFICIAL PERSONNEL TERMINAL</p>
+      </div>
+    </div>
+    <div class="header-status">
+      SECURE TERMINAL // RECORD #75-8821<br>
+      STATUS: ACTIVE / VERIFIED
+    </div>
+  </header>
+
+  <div class="main-container">
+    <aside class="panel-box">
+      <div class="panel-header">Service Profile</div>
+      <table class="profile-table">
+        <tr><th>Username</th><td>phendriieson</td></tr>
+        <tr><th>Rank</th><td>Staff Sergeant</td></tr>
+        <tr><th>Command</th><td>USASOC</td></tr>
+        <tr><th>Regiment</th><td>75th Ranger Regiment</td></tr>
+        <tr><th>Battalion</th><td>1st Ranger Battalion</td></tr>
+        <tr><th>Company</th><td>Ares Company</td></tr>
+        <tr><th>Position</th><td>Squad Leader</td></tr>
+        <tr><th>USAR Service</th><td>337 Days</td></tr>
+        <tr><th>75th Service</th><td>18 Days</td></tr>
+      </table>
+    </aside>
+
+    <main class="panel-box">
+      <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>Decorations & Badges Index</span>
+        <span id="award-counter" style="font-size:0.8rem; color:var(--usasoc-text-muted);">103 Items</span>
+      </div>
+      <div class="awards-grid" id="awards-grid"></div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="evidence-modal">
+    <div class="modal-content">
+      <div class="panel-header" id="modal-title">Decoration Title</div>
+      <p><strong>Status:</strong> <span id="modal-status"></span></p>
+      <p><strong>Date Awarded:</strong> <span id="modal-date"></span></p>
+      <p><strong>Official Record / Evidence:</strong></p>
+      <div style="background:var(--usasoc-black); padding:10px; border:1px solid var(--usasoc-border); font-family:var(--font-mono); font-size:0.85rem;" id="modal-evidence"></div>
+      <br>
+      <button class="btn-usasoc" style="float:right;" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
