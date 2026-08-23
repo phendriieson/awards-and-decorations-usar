@@ -13,7 +13,7 @@ async function handleLogin() {
   if (error) {
     alert("Authentication Failed: " + error.message);
   } else {
-    alert("Authentication Successful. Terminal Access Granted.");
+    alert("Terminal Access Granted.");
     document.getElementById("login-container").style.display = "none";
     document.getElementById("editor-container").style.display = "grid";
     loadCloudData();
@@ -69,7 +69,7 @@ async function saveToDatabase() {
   if (error) {
     alert("Error updating record: " + error.message);
   } else {
-    alert("Record updated permanently in Cloud Database!");
+    alert("Record updated successfully!");
     loadCloudData();
   }
 }
